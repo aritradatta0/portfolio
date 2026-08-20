@@ -60,9 +60,13 @@ export class Cursor {
       let ringX = x, ringY = y;
       let rafId = 0;
 
+      dot.style.opacity = '0';
+      ring.style.opacity = '0';
       const onMove = (e: PointerEvent) => {
         x = e.clientX;
         y = e.clientY;
+        dot.style.opacity = '1';
+        ring.style.opacity = '1';
         dot.style.transform = `translate(${x}px, ${y}px)`;
       };
       const onOver = (e: Event) => {

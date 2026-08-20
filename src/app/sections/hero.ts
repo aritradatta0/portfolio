@@ -18,7 +18,7 @@ import { Cmd } from '../shared/cmd';
               @for (ch of word; track $index; let ci = $index) {
                 <span class="ch" [style.animation-delay]="0.45 + (wi * 7 + ci) * 0.045 + 's'">{{ ch }}</span>
               }
-            </span>@if (!$last) {<span class="sp"> </span>}
+            </span>
           }
         </h1>
         <p class="role e" style="animation-delay: 1.1s">
@@ -73,10 +73,14 @@ import { Cmd } from '../shared/cmd';
       font-size: clamp(2.6rem, 9vw, 6rem);
       letter-spacing: -0.02em;
       margin-top: 0.6rem;
+      text-shadow: none;
     }
     .word {
       display: inline-block;
       white-space: nowrap;
+    }
+    .word:not(:last-child) {
+      margin-right: 0.26em;
     }
     .ch {
       display: inline-block;
