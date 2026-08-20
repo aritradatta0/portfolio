@@ -61,9 +61,9 @@ import { Cmd } from '../shared/cmd';
     }
     .role {
       color: var(--text-dim);
-      font-size: 0.82rem;
+      font-size: 0.86rem;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       margin-top: 0.4rem;
     }
     ul {

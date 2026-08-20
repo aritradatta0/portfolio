@@ -11,7 +11,7 @@ import { afterNextRender, Component, ElementRef, inject, input, signal } from '@
   styles: `
     .cmd {
       font-family: var(--font-mono);
-      font-size: 0.88rem;
+      font-size: 0.92rem;
       color: var(--text-dim);
       letter-spacing: 0.02em;
       display: inline-block;

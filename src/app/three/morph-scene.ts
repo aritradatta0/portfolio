@@ -21,7 +21,7 @@ export function createMorphScene(host: HTMLElement, sectionIds: string[]): Morph
   ];
   // per-formation tuning: line reach and overall intensity
   const linkDists = [26, 15, 17, 15, 14, 16];
-  const energies = [1.0, 0.45, 0.7, 0.65, 0.55, 0.95];
+  const energies = [1.0, 0.28, 0.45, 0.42, 0.35, 0.7];
 
   function cloud(): Float32Array {
     const a = new Float32Array(COUNT * 3);
@@ -225,8 +225,8 @@ export function createMorphScene(host: HTMLElement, sectionIds: string[]): Morph
       pos[ix + 2] = bz;
     }
     pointGeo.attributes['position'].needsUpdate = true;
-    pointMat.size = 1.5 + energy * 0.9;
-    pointMat.opacity = 0.45 + energy * 0.45;
+    pointMat.size = 1.3 + energy * 1.0;
+    pointMat.opacity = 0.28 + energy * 0.5;
 
     let vi = 0;
     for (let a = 0; a < LINE_NODES; a++) {
@@ -237,7 +237,7 @@ export function createMorphScene(host: HTMLElement, sectionIds: string[]): Morph
         const dz = pos[ax + 2] - pos[bx2 + 2];
         const d2 = dx * dx + dy * dy + dz * dz;
         if (d2 < linkDist * linkDist) {
-          const alpha = (1 - Math.sqrt(d2) / linkDist) * 0.5 * energy;
+          const alpha = (1 - Math.sqrt(d2) / linkDist) * 0.38 * energy;
           linePos[vi] = pos[ax]; linePos[vi + 1] = pos[ax + 1]; linePos[vi + 2] = pos[ax + 2];
           linePos[vi + 3] = pos[bx2]; linePos[vi + 4] = pos[bx2 + 1]; linePos[vi + 5] = pos[bx2 + 2];
           lineCol[vi] = R * alpha; lineCol[vi + 1] = G * alpha; lineCol[vi + 2] = B * alpha;

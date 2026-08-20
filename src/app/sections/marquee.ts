@@ -55,8 +55,8 @@ const TECH = [
     .item:hover { color: var(--accent); }
     .sep {
       color: var(--accent);
-      font-size: 0.5rem;
-      opacity: 0.7;
+      font-size: 0.7rem;
+      opacity: 0.8;
     }
     @keyframes scroll {
       to { transform: translateX(-50%); }
