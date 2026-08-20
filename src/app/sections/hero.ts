@@ -173,12 +173,15 @@ export class Hero {
   constructor() {
     afterNextRender(() => {
       if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        this.animateStats();
+        // zero the values while the stats block is still faded out,
+        // then start counting as it becomes visible (entrance delay is 1.3s)
+        this.shown.set(profile.stats.map((s) => s.value.replace(/\d+(?:\.\d+)?/, '0')));
+        setTimeout(() => this.animateStats(), 1350);
       }
     });
   }
 
-  /** Counts each stat up from 0 to its target (e.g. "300K+" animates 0K+ → 300K+). */
+  /** Counts each stat up from 0 to its target, staggered (e.g. "300K+" ticks 0K+ → 300K+). */
   private animateStats() {
     const targets = profile.stats.map((s) => {
       const match = /^([^0-9]*)(\d+(?:\.\d+)?)(.*)$/.exec(s.value);
@@ -186,18 +189,22 @@ export class Hero {
         ? { prefix: match[1], num: parseFloat(match[2]), suffix: match[3], decimals: match[2].includes('.') ? 1 : 0 }
         : null;
     });
-    const duration = 1400;
+    const duration = 1800;
+    const stagger = 220;
     const startTime = performance.now();
     const tick = (now: number) => {
-      const progress = Math.min((now - startTime) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
+      let done = true;
       this.shown.set(
         profile.stats.map((s, i) => {
           const t = targets[i];
-          return t ? `${t.prefix}${(t.num * eased).toFixed(t.decimals)}${t.suffix}` : s.value;
+          if (!t) return s.value;
+          const progress = Math.min(Math.max((now - startTime - i * stagger) / duration, 0), 1);
+          if (progress < 1) done = false;
+          const eased = 1 - Math.pow(1 - progress, 3);
+          return `${t.prefix}${(t.num * eased).toFixed(t.decimals)}${t.suffix}`;
         }),
       );
-      if (progress < 1) requestAnimationFrame(tick);
+      if (!done) requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
   }
