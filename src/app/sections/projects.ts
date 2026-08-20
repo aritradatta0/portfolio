@@ -73,10 +73,16 @@ import { Cmd } from '../shared/cmd';
       color: var(--text-dim);
       font-size: 0.95rem;
 
+      li {
+        position: relative;
+        padding-left: 1.15rem;
+      }
+
       li::before {
         content: '▹';
         color: var(--accent);
-        margin-right: 0.55rem;
+        position: absolute;
+        left: 0;
       }
     }
     footer {

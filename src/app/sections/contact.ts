@@ -28,7 +28,6 @@ import { Cmd } from '../shared/cmd';
       text-align: center;
       padding-block: 3rem;
     }
-    .section-title { justify-content: center; }
     .pitch {
       color: var(--text-dim);
       max-width: 54ch;

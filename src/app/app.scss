@@ -102,8 +102,61 @@ footer {
   font-size: 0.85rem;
 }
 
+.menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  width: 44px;
+  height: 44px;
+  padding: 12px 10px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 7px;
+
+  span {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: var(--text);
+    border-radius: 2px;
+    transition: transform 0.25s ease;
+  }
+}
+
+.mobile-menu {
+  display: none;
+}
+
 @media (max-width: 640px) {
-  nav a:not(.btn) {
+  nav a {
     display: none;
+  }
+
+  .menu-btn {
+    display: flex;
+  }
+
+  .mobile-menu {
+    display: flex;
+    flex-direction: column;
+    background: rgba(7, 10, 18, 0.96);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+
+    &.open {
+      max-height: 320px;
+    }
+
+    a {
+      display: block;
+      padding: 0.95rem 4vw;
+      color: var(--text);
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      border-top: 1px solid var(--border);
+    }
   }
 }

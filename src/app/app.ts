@@ -1,4 +1,4 @@
-import { afterNextRender, Component, DestroyRef, inject } from '@angular/core';
+import { afterNextRender, Component, DestroyRef, inject, signal } from '@angular/core';
 import { Hero } from './sections/hero';
 import { About } from './sections/about';
 import { Projects } from './sections/projects';
@@ -16,6 +16,8 @@ import { Backdrop } from './three/backdrop';
   styleUrl: './app.scss',
 })
 export class App {
+  protected readonly menuOpen = signal(false);
+
   constructor() {
     const destroyRef = inject(DestroyRef);
     afterNextRender(() => {

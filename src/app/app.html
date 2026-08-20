@@ -1,3 +1,4 @@
+<a class="skip" href="#main">Skip to content</a>
 <app-cursor />
 <div class="bg-aurora" aria-hidden="true"></div>
 <div class="bg-grid" aria-hidden="true"></div>
@@ -12,11 +13,28 @@
       <a href="#skills">Skills</a>
       <a href="#experience">Experience</a>
       <a href="#contact" class="btn small">Contact</a>
+      <button
+        class="menu-btn"
+        type="button"
+        aria-label="Toggle menu"
+        [attr.aria-expanded]="menuOpen()"
+        (click)="menuOpen.set(!menuOpen())"
+      >
+        <span class="bar1"></span>
+        <span class="bar2"></span>
+      </button>
     </nav>
+  </div>
+  <div class="mobile-menu" [class.open]="menuOpen()" (click)="menuOpen.set(false)">
+    <a href="#about">About</a>
+    <a href="#projects">Work</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#contact">Contact</a>
   </div>
 </header>
 
-<main>
+<main id="main">
   <app-hero />
   <app-marquee />
   <app-about />

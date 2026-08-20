@@ -13,8 +13,12 @@ import { Cmd } from '../shared/cmd';
           <app-cmd text="aritra --init --role=senior-full-stack --base=kolkata --mode=ai-native" />
         </div>
         <h1 class="name" aria-label="{{ p.name }}">
-          @for (ch of letters; track $index; let i = $index) {
-            <span class="ch" aria-hidden="true" [style.animation-delay]="0.45 + i * 0.045 + 's'">{{ ch }}</span>
+          @for (word of words; track $index; let wi = $index) {
+            <span class="word" aria-hidden="true">
+              @for (ch of word; track $index; let ci = $index) {
+                <span class="ch" [style.animation-delay]="0.45 + (wi * 7 + ci) * 0.045 + 's'">{{ ch }}</span>
+              }
+            </span>@if (!$last) {<span class="sp"> </span>}
           }
         </h1>
         <p class="role e" style="animation-delay: 1.1s">
@@ -66,10 +70,13 @@ import { Cmd } from '../shared/cmd';
       z-index: 1;
     }
     .name {
-      font-size: clamp(3rem, 9vw, 6rem);
+      font-size: clamp(2.6rem, 9vw, 6rem);
       letter-spacing: -0.02em;
-      white-space: nowrap;
       margin-top: 0.6rem;
+    }
+    .word {
+      display: inline-block;
+      white-space: nowrap;
     }
     .ch {
       display: inline-block;
@@ -148,9 +155,6 @@ import { Cmd } from '../shared/cmd';
       70% { transform: translateY(14px); opacity: 0; }
       100% { transform: translateY(0); opacity: 0; }
     }
-    @media (max-width: 640px) {
-      .name { white-space: normal; }
-    }
     @media (prefers-reduced-motion: reduce) {
       .ch, .e { animation: none; opacity: 1; transform: none; filter: none; }
       .wheel { animation: none; }
@@ -159,7 +163,7 @@ import { Cmd } from '../shared/cmd';
 })
 export class Hero {
   protected readonly p = profile;
-  protected readonly letters = profile.name.split('').map((c) => (c === ' ' ? ' ' : c));
+  protected readonly words = profile.name.split(' ').map((w) => w.split(''));
   protected readonly shown = signal(profile.stats.map((s) => s.value as string));
 
   constructor() {
