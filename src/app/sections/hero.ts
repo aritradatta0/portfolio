@@ -1,21 +1,23 @@
-import { afterNextRender, Component, DestroyRef, ElementRef, inject, signal, viewChild } from '@angular/core';
+import { afterNextRender, Component, signal } from '@angular/core';
 import { profile } from '../data/content';
-import type { HeroSceneHandle } from '../three/hero-scene';
+import { Cmd } from '../shared/cmd';
 
 @Component({
   selector: 'app-hero',
+  imports: [Cmd],
   template: `
     <section class="hero" id="top">
       <div class="glow" aria-hidden="true"></div>
-      <div class="canvas-host" #canvasHost aria-hidden="true"></div>
       <div class="container inner">
-        <p class="kicker e" style="animation-delay: .1s">{{ p.location }}</p>
+        <div class="e" style="animation-delay: .05s">
+          <app-cmd text="aritra --init --role=senior-full-stack --base=kolkata --mode=ai-native" />
+        </div>
         <h1 class="name" aria-label="{{ p.name }}">
           @for (ch of letters; track $index; let i = $index) {
-            <span class="ch" aria-hidden="true" [style.animation-delay]="0.25 + i * 0.045 + 's'">{{ ch }}</span>
+            <span class="ch" aria-hidden="true" [style.animation-delay]="0.45 + i * 0.045 + 's'">{{ ch }}</span>
           }
         </h1>
-        <p class="role e" style="animation-delay: .9s">
+        <p class="role e" style="animation-delay: 1.1s">
           {{ p.headline }}
           <span class="tags">
             @for (tag of p.tags; track tag; let last = $last) {
@@ -23,7 +25,7 @@ import type { HeroSceneHandle } from '../three/hero-scene';
             }
           </span>
         </p>
-        <div class="stats e" style="animation-delay: 1.1s">
+        <div class="stats e" style="animation-delay: 1.3s">
           @for (s of p.stats; track s.label; let i = $index) {
             <div class="stat">
               <span class="value">{{ shown()[i] }}</span>
@@ -31,14 +33,14 @@ import type { HeroSceneHandle } from '../three/hero-scene';
             </div>
           }
         </div>
-        <div class="cta e" style="animation-delay: 1.3s">
+        <div class="cta e" style="animation-delay: 1.5s">
           <a class="btn primary" href="#projects">View my work</a>
           <a class="btn" href="Aritra_Datta_Resume.pdf" download>Download CV</a>
           <a class="btn" [href]="p.github" target="_blank" rel="noopener">GitHub</a>
           <a class="btn" [href]="p.linkedin" target="_blank" rel="noopener">LinkedIn</a>
         </div>
       </div>
-      <div class="scroll-hint e" style="animation-delay: 1.8s" aria-hidden="true">
+      <div class="scroll-hint e" style="animation-delay: 2s" aria-hidden="true">
         <span class="wheel"></span>
       </div>
     </section>
@@ -49,7 +51,6 @@ import type { HeroSceneHandle } from '../three/hero-scene';
       display: flex;
       align-items: center;
       position: relative;
-      overflow: hidden;
       padding-block: 6rem;
     }
     .glow {
@@ -60,29 +61,15 @@ import type { HeroSceneHandle } from '../three/hero-scene';
         radial-gradient(500px 380px at 20% 80%, rgba(31, 62, 90, 0.35), transparent 70%);
       pointer-events: none;
     }
-    .canvas-host {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-    }
     .inner {
       position: relative;
       z-index: 1;
-      pointer-events: none;
-    }
-    .inner a { pointer-events: auto; }
-    .kicker {
-      color: var(--accent);
-      font-family: var(--font-display);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      font-size: 0.8rem;
-      margin-bottom: 1rem;
     }
     .name {
       font-size: clamp(3rem, 9vw, 6rem);
       letter-spacing: -0.02em;
       white-space: nowrap;
+      margin-top: 0.6rem;
     }
     .ch {
       display: inline-block;
@@ -172,25 +159,14 @@ import type { HeroSceneHandle } from '../three/hero-scene';
 })
 export class Hero {
   protected readonly p = profile;
-  protected readonly letters = profile.name.split('').map((c) => (c === ' ' ? ' ' : c));
+  protected readonly letters = profile.name.split('').map((c) => (c === ' ' ? ' ' : c));
   protected readonly shown = signal(profile.stats.map((s) => s.value as string));
 
-  private readonly canvasHost = viewChild.required<ElementRef<HTMLElement>>('canvasHost');
-  private scene?: HeroSceneHandle;
-
   constructor() {
-    const destroyRef = inject(DestroyRef);
     afterNextRender(() => {
-      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (!reduced) {
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         this.animateStats();
-        const start = () =>
-          import('../three/hero-scene').then((m) => {
-            this.scene = m.createHeroScene(this.canvasHost().nativeElement);
-          });
-        'requestIdleCallback' in window ? requestIdleCallback(() => start()) : setTimeout(start, 250);
       }
-      destroyRef.onDestroy(() => this.scene?.dispose());
     });
   }
 

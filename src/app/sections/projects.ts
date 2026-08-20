@@ -2,14 +2,16 @@ import { Component } from '@angular/core';
 import { projects } from '../data/content';
 import { Reveal } from '../shared/reveal.directive';
 import { Tilt } from '../shared/tilt.directive';
+import { Cmd } from '../shared/cmd';
 
 @Component({
   selector: 'app-projects',
-  imports: [Reveal, Tilt],
+  imports: [Reveal, Tilt, Cmd],
   template: `
     <section id="projects">
       <div class="container">
-        <h2 class="section-title" appReveal><span class="index">02.</span>Things I've built</h2>
+        <app-cmd text="show projects --env=production" />
+        <h2 class="section-title" appReveal>Things I've built</h2>
         <p class="section-sub" appReveal>
           Production platforms with real users, real payments and real-time everything.
         </p>

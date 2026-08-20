@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
 import { profile } from '../data/content';
 import { Reveal } from '../shared/reveal.directive';
+import { Cmd } from '../shared/cmd';
 
 @Component({
   selector: 'app-contact',
-  imports: [Reveal],
+  imports: [Reveal, Cmd],
   template: `
     <section id="contact">
       <div class="container inner">
-        <h2 class="section-title" appReveal><span class="index">05.</span>Let's talk</h2>
+        <app-cmd text="open channel --to=aritra" />
+        <h2 class="section-title" appReveal>Let's talk</h2>
         <p class="pitch" appReveal>
           I'm currently open to senior full-stack roles. If you need someone who ships
           Angular and Node at scale — and directs AI like a team — my inbox is open.

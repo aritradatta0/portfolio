@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
 import { skillGroups } from '../data/content';
 import { Reveal } from '../shared/reveal.directive';
+import { Cmd } from '../shared/cmd';
 
 @Component({
   selector: 'app-skills',
-  imports: [Reveal],
+  imports: [Reveal, Cmd],
   template: `
     <section id="skills">
       <div class="container">
-        <h2 class="section-title" appReveal><span class="index">03.</span>Skills</h2>
+        <app-cmd text="query skills --group=all" />
+        <h2 class="section-title" appReveal>Skills</h2>
         <div class="groups">
           @for (group of groups; track group.label; let i = $index) {
             <div class="group card" [appReveal]="i * 100">

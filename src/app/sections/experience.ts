@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
 import { timeline } from '../data/content';
 import { Reveal } from '../shared/reveal.directive';
+import { Cmd } from '../shared/cmd';
 
 @Component({
   selector: 'app-experience',
-  imports: [Reveal],
+  imports: [Reveal, Cmd],
   template: `
     <section id="experience">
       <div class="container">
-        <h2 class="section-title" appReveal><span class="index">04.</span>Experience</h2>
+        <app-cmd text="log experience --since=2019" />
+        <h2 class="section-title" appReveal>Experience</h2>
         <div class="timeline">
           @for (entry of entries; track entry.title; let i = $index) {
             <div class="entry" [appReveal]="i * 120">

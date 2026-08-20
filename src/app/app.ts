@@ -7,10 +7,11 @@ import { Experience } from './sections/experience';
 import { Contact } from './sections/contact';
 import { Marquee } from './sections/marquee';
 import { Cursor } from './shared/cursor';
+import { Backdrop } from './three/backdrop';
 
 @Component({
   selector: 'app-root',
-  imports: [Hero, About, Projects, Skills, Experience, Contact, Marquee, Cursor],
+  imports: [Hero, About, Projects, Skills, Experience, Contact, Marquee, Cursor, Backdrop],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
 import { aboutStory } from '../data/content';
 import { Reveal } from '../shared/reveal.directive';
+import { Cmd } from '../shared/cmd';
 
 @Component({
   selector: 'app-about',
-  imports: [Reveal],
+  imports: [Reveal, Cmd],
   template: `
     <section id="about">
       <div class="container">
-        <h2 class="section-title" appReveal><span class="index">01.</span>About</h2>
+        <app-cmd text="whoami" />
+        <h2 class="section-title" appReveal>About</h2>
         <div class="story">
           @for (para of story; track $index; let i = $index) {
             <p [appReveal]="i * 120">{{ para }}</p>
