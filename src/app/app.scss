@@ -4,9 +4,55 @@
   left: 0;
   right: 0;
   z-index: 50;
-  background: rgba(7, 10, 18, 0.75);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: transform 0.35s ease, background 0.35s ease, border-color 0.35s ease;
+
+  &.nav-scrolled {
+    background: rgba(7, 10, 18, 0.75);
+    backdrop-filter: blur(12px);
+    border-bottom-color: var(--border);
+  }
+
+  &.nav-hidden {
+    transform: translateY(-100%);
+  }
+}
+
+.bg-aurora {
+  position: fixed;
+  inset: -12%;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(45% 35% at 15% 20%, rgba(31, 62, 90, 0.5), transparent 70%),
+    radial-gradient(40% 32% at 85% 70%, rgba(78, 168, 255, 0.1), transparent 70%),
+    radial-gradient(35% 30% at 60% 5%, rgba(122, 92, 255, 0.07), transparent 70%);
+  animation: aurora 26s ease-in-out infinite alternate;
+}
+
+@keyframes aurora {
+  to {
+    transform: translate3d(2.5%, -2%, 0) scale(1.07);
+  }
+}
+
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(147, 161, 181, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(147, 161, 181, 0.05) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 85% 65% at 50% 30%, black 25%, transparent 78%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bg-aurora {
+    animation: none;
+  }
 }
 
 .bar {

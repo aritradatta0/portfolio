@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { projects } from '../data/content';
 import { Reveal } from '../shared/reveal.directive';
+import { Tilt } from '../shared/tilt.directive';
 
 @Component({
   selector: 'app-projects',
-  imports: [Reveal],
+  imports: [Reveal, Tilt],
   template: `
     <section id="projects">
       <div class="container">
@@ -14,7 +15,7 @@ import { Reveal } from '../shared/reveal.directive';
         </p>
         <div class="grid">
           @for (project of list; track project.name; let i = $index) {
-            <article class="card" [appReveal]="(i % 2) * 130">
+            <article class="card" appTilt [appReveal]="(i % 2) * 130">
               <header>
                 <h3>{{ project.name }}</h3>
                 <p class="tagline">{{ project.tagline }}</p>
